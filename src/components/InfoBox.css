@@ -1,9 +1,11 @@
 .infoBox {
   flex: 1;
   cursor: pointer;
+  min-width: 130px;
+  text-align: center;
 }
 .infoBox:not(:last-child) {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .infoBox__cases {
