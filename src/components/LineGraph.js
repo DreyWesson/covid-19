@@ -2,6 +2,7 @@ import "./LineGraph.css";
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import numeral from "numeral";
+import { useQuery } from "react-query";
 
 const options = {
   legend: {
@@ -66,17 +67,29 @@ const buildChartData = (data, casesType = "cases") => {
 const LineGraph = ({ casesType = "cases", ...props }) => {
   const [data, setData] = useState({});
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetch(`https://disease.sh/v3/covid-19/historical/all?lastdays=120`)
-        .then((res) => res.json())
-        .then((data) => {
-          let chartData = buildChartData(data, casesType);
-          setData(chartData);
-        });
-    };
-    fetchData();
-  }, [casesType]);
+  const fetchData = async (key, casesType) => {
+    return await fetch(
+      `https://disease.sh/v3/covid-19/historical/all?lastdays=120`
+    )
+      .then((res) => res.json())
+      .then((data) => buildChartData(data, casesType));
+  };
+  // useQuery implementation for asynchronous data
+  const getCovidData = useQuery(["covidData", casesType], fetchData);
+  const covidData = getCovidData.data;
+  useEffect(() => setData(covidData), [covidData]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await fetch(`https://disease.sh/v3/covid-19/historical/all?lastdays=120`)
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         let chartData = buildChartData(data, casesType);
+  //         setData(chartData);
+  //       });
+  //   };
+  //   fetchData();
+  // }, [casesType]);
 
   return (
     <div className={props.className}>

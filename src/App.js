@@ -14,6 +14,7 @@ import { sortData, prettyPrintStat } from "./util";
 import Map from "./components/Map";
 import "leaflet/dist/leaflet.css";
 import numeral from "numeral";
+import { ReactQueryDevtools } from "react-query-devtools";
 
 function App() {
   const [countries, setCountries] = useState([]),
@@ -70,69 +71,72 @@ function App() {
   console.log(mapZoom);
   console.log(casesType);
   return (
-    <div className="app">
-      <div className="app__left">
-        <div className="app__header">
-          <h1>COVID-19 TRACKER</h1>
+    <>
+      <div className="app">
+        <div className="app__left">
+          <div className="app__header">
+            <h1>COVID-19 TRACKER</h1>
 
-          <FormControl className="app__dropdown">
-            <Select
-              variant="outlined"
-              value={country}
-              onChange={onCountryChange}
-            >
-              <MenuItem value="Worldwide">Worldwide</MenuItem>
-              {countries.map((country) => (
-                <MenuItem value={country.value}>{country.name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <div className="app__stats">
-          <InfoBox
-            className="app__infoBox"
-            isRed
-            active={casesType === "cases"}
-            onClick={(e) => setCasesType("cases")}
-            title={"Coronavirus"}
-            total={numeral(countryInfo.cases).format("0,0")}
-            cases={prettyPrintStat(countryInfo.todayCases)}
-          />
-          <InfoBox
-            className="app__infoBox"
-            active={casesType === "recovered"}
-            onClick={(e) => setCasesType("recovered")}
-            title={"Recovered"}
-            total={numeral(countryInfo.recovered).format("0,0")}
-            cases={prettyPrintStat(countryInfo.todayRecovered)}
-          />
-          <InfoBox
-            className="app__infoBox"
-            isRed
-            active={casesType === "deaths"}
-            onClick={(e) => setCasesType("deaths")}
-            title={"Deaths"}
-            total={numeral(countryInfo.deaths).format("0,0")}
-            cases={prettyPrintStat(countryInfo.todayDeaths)}
-          />
-        </div>
+            <FormControl className="app__dropdown">
+              <Select
+                variant="outlined"
+                value={country}
+                onChange={onCountryChange}
+              >
+                <MenuItem value="Worldwide">Worldwide</MenuItem>
+                {countries.map((country) => (
+                  <MenuItem value={country.value}>{country.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="app__stats">
+            <InfoBox
+              className="app__infoBox"
+              isRed
+              active={casesType === "cases"}
+              onClick={(e) => setCasesType("cases")}
+              title={"Coronavirus"}
+              total={numeral(countryInfo.cases).format("0,0")}
+              cases={prettyPrintStat(countryInfo.todayCases)}
+            />
+            <InfoBox
+              className="app__infoBox"
+              active={casesType === "recovered"}
+              onClick={(e) => setCasesType("recovered")}
+              title={"Recovered"}
+              total={numeral(countryInfo.recovered).format("0,0")}
+              cases={prettyPrintStat(countryInfo.todayRecovered)}
+            />
+            <InfoBox
+              className="app__infoBox"
+              isRed
+              active={casesType === "deaths"}
+              onClick={(e) => setCasesType("deaths")}
+              title={"Deaths"}
+              total={numeral(countryInfo.deaths).format("0,0")}
+              cases={prettyPrintStat(countryInfo.todayDeaths)}
+            />
+          </div>
 
-        <Map
-          casesType={casesType}
-          countries={mapCountries}
-          center={mapCenter}
-          zoom={mapZoom}
-        />
+          <Map
+            casesType={casesType}
+            countries={mapCountries}
+            center={mapCenter}
+            zoom={mapZoom}
+          />
+        </div>
+        <Card className="app__right">
+          <CardContent>
+            <h3>Live Cases by Country</h3>
+            <Table countries={tableData} />
+            <h3 className="app__rightGraph">Worldwide new {casesType}</h3>
+            <LineGraph className="app__graph" casesType={casesType} />
+          </CardContent>
+        </Card>
       </div>
-      <Card className="app__right">
-        <CardContent>
-          <h3>Live Cases by Country</h3>
-          <Table countries={tableData} />
-          <h3 className="app__rightGraph">Worldwide new {casesType}</h3>
-          <LineGraph className="app__graph" casesType={casesType} />
-        </CardContent>
-      </Card>
-    </div>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </>
   );
 }
 
