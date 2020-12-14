@@ -1,4 +1,4 @@
-import "./LineGraph.css";
+import "./styles/LineGraph.css";
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import numeral from "numeral";
@@ -64,7 +64,7 @@ const buildChartData = (data, casesType = "cases") => {
   return chartData;
 };
 
-const LineGraph = ({ casesType = "cases", ...props }) => {
+export const LineGraph = ({ casesType = "cases", ...props }) => {
   const [data, setData] = useState({});
 
   const fetchData = async (key, casesType) => {
@@ -110,5 +110,3 @@ const LineGraph = ({ casesType = "cases", ...props }) => {
     </div>
   );
 };
-
-export default LineGraph;

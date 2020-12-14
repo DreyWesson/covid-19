@@ -1,8 +1,8 @@
-import "./InfoBox.css";
+import "./styles/InfoBox.css";
 import React from "react";
 import { Card, CardContent, Typography } from "@material-ui/core";
 
-const InfoBox = ({ title, isRed, cases, active, total, ...props }) => {
+export const InfoBox = ({ title, isRed, cases, active, total, ...props }) => {
   return (
     <Card
       onClick={props.onClick}
@@ -24,5 +24,3 @@ const InfoBox = ({ title, isRed, cases, active, total, ...props }) => {
     </Card>
   );
 };
-
-export default InfoBox;

@@ -1,9 +1,9 @@
-import "./Map.css";
+import "./styles/Map.css";
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import { showDataOnMap } from "../util";
 
-const Map = ({ countries, casesType, center, zoom }) => {
+export const Map = ({ countries, casesType, center, zoom }) => {
   return (
     <div className="map">
       <MapContainer center={center} zoom={zoom}>
@@ -16,5 +16,3 @@ const Map = ({ countries, casesType, center, zoom }) => {
     </div>
   );
 };
-
-export default Map;

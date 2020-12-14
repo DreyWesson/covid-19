@@ -1,8 +1,8 @@
-import "./Table.css";
+import "./styles/Table.css";
 import numeral from "numeral";
 import React from "react";
 
-const Table = ({ countries }) => {
+export const Table = ({ countries }) => {
   return (
     <div className="table">
       {countries.map(({ country, cases }) => (
@@ -16,5 +16,3 @@ const Table = ({ countries }) => {
     </div>
   );
 };
-
-export default Table;

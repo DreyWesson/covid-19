@@ -7,11 +7,8 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import InfoBox from "./components/InfoBox";
-import LineGraph from "./components/LineGraph";
-import Table from "./components/Table";
+import { InfoBox, LineGraph, Table, Map } from "./components";
 import { sortData, prettyPrintStat } from "./util";
-import Map from "./components/Map";
 import "leaflet/dist/leaflet.css";
 import numeral from "numeral";
 import { ReactQueryDevtools } from "react-query-devtools";
